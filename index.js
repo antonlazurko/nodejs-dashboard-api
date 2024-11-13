@@ -9,13 +9,24 @@ app.all("/hello", (req, res, next) => {
     next();
 })
 
-const cb = (req, res, next) => {
-    console.log('cb :>> ');
-    next();
-}
-
-app.route('/user').get((req, res) => {
-        res.send("Hello World get");
+app.route('/').get((req, res) => {
+    // res.redirect(301, '/hello');
+    res.status(404).end()
+})
+app.route('/hello').get((req, res) => {
+        // res.set('Content-Type', 'text/plain');
+        res.type('application/json');
+        res.cookie('token', '12345', {
+            domain: 'localhost',
+            path: '/',
+            secure: true,
+            expires: new Date(0)
+        });
+        res.clearCookie('token', {
+            path: '/'
+        });
+        res.send("Hello World");
+        // res.download('./README.md', 'test.md');
     })
     .post((req, res) => {
         res.send("Hello World post");
