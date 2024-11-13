@@ -22,7 +22,7 @@ export class BaseController {
         return response.status(code).json(message);
     }
     public ok<T> (response: Response, message: T) {
-        this.send<T>(response,200,  message);
+        this.send<T>(response, 200,  message);
     }
 
     protected bindRoutes(routes: IControllerRoute[]) {
