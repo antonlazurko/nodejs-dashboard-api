@@ -20,6 +20,8 @@
   "homepage": "https://github.com/antonlazurko/nodejs-dashboard-api#readme",
   "dependencies": {
     "express": "^4.21.1",
+    "inversify": "^6.1.4",
+    "reflect-metadata": "^0.2.2",
     "tslog": "^4.9.3"
   },
   "devDependencies": {
