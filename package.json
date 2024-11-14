@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node ./dist/main.js",
     "build": "tsc",
+    "dev": "nodemon",
     "lint": "eslint ./src/**",
     "lint:fix": "eslint ./src/** --fix"
   },
@@ -33,7 +34,9 @@
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   }
 }
