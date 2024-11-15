@@ -7,6 +7,8 @@ import { HttpError } from '../errors/http-error.class';
 import { ILogger } from '../logger/logger.interface';
 import { TYPES } from '../types';
 import { IUserController } from './user.controller.interface';
+import { UserLoginDto } from './dto/user-login.dto';
+import { UserRegisterDto } from './dto/user-register.dto';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
@@ -25,14 +27,14 @@ export class UserController extends BaseController implements IUserController {
 			},
 		]);
 	}
-	login(req: Request, res: Response, next: NextFunction): void {
-		if (req?.body) {
+	login(req: Request<object, object, UserLoginDto>, res: Response, next: NextFunction): void {
+		if (req?.body?.email && req?.body?.password) {
 			this.ok(res, 'login');
 		} else {
 			next(new HttpError('Login Error', 401, 'login'));
 		}
 	}
-	register(req: Request, res: Response, next: NextFunction): void {
+	register(req: Request<object, object, UserRegisterDto>, res: Response, next: NextFunction): void {
 		this.ok(res, 'register');
 	}
 }
