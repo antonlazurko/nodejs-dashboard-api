@@ -49,6 +49,7 @@ export class UserController extends BaseController implements IUserController {
 		if (!result) {
 			return next(new HttpError('User already exist', 422, 'register'));
 		}
-		this.ok(res, { name: result.name });
+		this.loggerService.log(`[UserController] User ${result.name} was created.`);
+		this.ok(res, { name: result.name, id: result.id });
 	}
 }
