@@ -9,7 +9,7 @@ import { TYPES } from './types';
 import { IExceptionFilter } from './errors/exception.filter.interface';
 import { IConfigService } from './config/config.service.interface';
 import { PrismaService } from './database/prisma.service';
-import { IUsersRepository } from './users/users.repository.interface';
+import { IUsersRepository } from './users/interfaces/users.repository.interface';
 
 @injectable()
 export class App {

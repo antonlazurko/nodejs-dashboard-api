@@ -6,10 +6,10 @@ import { BaseController } from '../common/base.controller';
 import { HttpError } from '../errors/http-error.class';
 import { ILogger } from '../logger/logger.interface';
 import { TYPES } from '../types';
-import { IUserController } from './user.controller.interface';
+import { IUserController } from './interfaces/user.controller.interface';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { IUserService } from './user.service.interface';
+import { IUserService } from './interfaces/user.service.interface';
 import { ValidateMiddleware } from '../common/validate.middleware';
 
 @injectable()

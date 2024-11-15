@@ -5,10 +5,10 @@ import { compare } from 'bcryptjs';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { User } from './user.entity';
-import { IUserService } from './user.service.interface';
+import { IUserService } from './interfaces/user.service.interface';
 import { TYPES } from '../types';
 import { IConfigService } from '../config/config.service.interface';
-import { IUsersRepository } from './users.repository.interface';
+import { IUsersRepository } from './interfaces/users.repository.interface';
 
 @injectable()
 export class UserService implements IUserService {
