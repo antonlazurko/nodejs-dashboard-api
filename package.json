@@ -25,6 +25,8 @@
   "homepage": "https://github.com/antonlazurko/nodejs-dashboard-api#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "express": "^4.21.1",
     "inversify": "^6.1.4",
     "reflect-metadata": "^0.2.2",
