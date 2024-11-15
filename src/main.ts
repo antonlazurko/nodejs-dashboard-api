@@ -10,11 +10,14 @@ import { ILogger } from './logger/logger.interface';
 import { IUserController } from './users/user.controller.interface';
 import { IBootstrapReturn } from './bootstrap.interface';
 import { TYPES } from './types';
+import { IUserService } from './users/user.service.interface';
+import { UserService } from './users/user.service';
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ILogger>(TYPES.ILogger).to(LoggerService);
 	bind<IUserController>(TYPES.IUserController).to(UserController);
 	bind<IExceptionFilter>(TYPES.IExceptionFilter).to(ExceptionFilter);
+	bind<IUserService>(TYPES.IUserService).to(UserService);
 	bind<App>(TYPES.Application).to(App);
 });
 
