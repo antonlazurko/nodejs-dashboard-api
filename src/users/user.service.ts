@@ -1,4 +1,6 @@
 import { inject, injectable } from 'inversify';
+import { UserModel } from '@prisma/client';
+import { compare } from 'bcryptjs';
 
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
@@ -7,7 +9,6 @@ import { IUserService } from './user.service.interface';
 import { TYPES } from '../types';
 import { IConfigService } from '../config/config.service.interface';
 import { IUsersRepository } from './users.repository.interface';
-import { UserModel } from '@prisma/client';
 
 @injectable()
 export class UserService implements IUserService {
@@ -24,7 +25,13 @@ export class UserService implements IUserService {
 		return !existedUser ? this.usersRepository.createUser(newUser) : null;
 	}
 
-	async validateUser(dto: UserLoginDto): Promise<boolean> {
-		return false;
+	async validateUser({ email, password }: UserLoginDto): Promise<boolean> {
+		const existedUser = await this.usersRepository.findByEmail(email);
+		if (!existedUser) {
+			return false;
+		}
+		const newUser = new User(existedUser.email, existedUser.name, existedUser.password);
+
+		return newUser.validatePassword(password);
 	}
 }

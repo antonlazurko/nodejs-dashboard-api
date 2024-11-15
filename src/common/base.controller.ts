@@ -24,8 +24,8 @@ export class BaseController {
 		response.type('application/json');
 		return response.status(code).json(message);
 	}
-	public ok<T>(response: Response, message: T): ExpressReturnType {
-		return this.send<T>(response, 200, message);
+	public ok<T>(response: Response, message: T, code: number): ExpressReturnType {
+		return this.send<T>(response, code, message);
 	}
 
 	protected bindRoutes(routes: IControllerRoute[]): void {

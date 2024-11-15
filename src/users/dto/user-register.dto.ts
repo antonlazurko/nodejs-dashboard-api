@@ -1,4 +1,4 @@
-import { IS_STRONG_PASSWORD, IsEmail, IsString, IsStrongPassword } from 'class-validator';
+import { IsEmail, IsString } from 'class-validator';
 
 export class UserRegisterDto {
 	@IsEmail({}, { message: 'Wrong email' })

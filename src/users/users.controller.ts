@@ -24,6 +24,7 @@ export class UserController extends BaseController implements IUserController {
 				path: '/login',
 				method: 'post',
 				func: this.login,
+				middlewares: [new ValidateMiddleware(UserLoginDto)],
 			},
 			{
 				path: '/register',
@@ -33,12 +34,20 @@ export class UserController extends BaseController implements IUserController {
 			},
 		]);
 	}
-	login(req: Request<object, object, UserLoginDto>, res: Response, next: NextFunction): void {
-		if (req?.body?.email && req?.body?.password) {
-			this.ok(res, 'login');
-		} else {
-			next(new HttpError('Login Error', 401, 'login'));
+	async login(
+		{ body }: Request<object, object, UserLoginDto>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void> {
+		const isUserValid = await this.userService.validateUser(body);
+		if (!isUserValid) {
+			return next(
+				new HttpError('User not found. Please check your login credentials', 401, 'login'),
+			);
 		}
+
+		this.loggerService.log(`[UserController] User found with email: ${body.email}`);
+		this.ok(res, {}, 200);
 	}
 	async register(
 		{ body }: Request<object, object, UserRegisterDto>,
@@ -50,6 +59,6 @@ export class UserController extends BaseController implements IUserController {
 			return next(new HttpError('User already exist', 422, 'register'));
 		}
 		this.loggerService.log(`[UserController] User ${result.name} was created.`);
-		this.ok(res, { name: result.name, id: result.id });
+		this.ok(res, { name: result.name, id: result.id }, 201);
 	}
 }
