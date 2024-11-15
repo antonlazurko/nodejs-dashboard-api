@@ -11,7 +11,7 @@ import { TYPES } from '../types';
 export class ExceptionFilter implements IExceptionFilter {
 	constructor(@inject(TYPES.ILogger) private logger: ILogger) {
 		this.logger = logger;
-		this.logger.log('Exception Filter created');
+		this.logger.log('[ExceptionFilter] Exception Filter created');
 	}
 
 	catch(err: Error | HttpError, req: Request, res: Response, next: NextFunction): void {

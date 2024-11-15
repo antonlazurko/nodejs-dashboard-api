@@ -1,12 +1,13 @@
 import express, { Express, json } from 'express';
 import { Server } from 'http';
 import 'reflect-metadata';
+import { injectable, inject } from 'inversify';
 
 import { UserController } from './users/users.controller';
-import { ExceptionFilter } from './errors/exception.filter';
 import { ILogger } from './logger/logger.interface';
-import { injectable, inject } from 'inversify';
 import { TYPES } from './types';
+import { IExceptionFilter } from './errors/exception.filter.interface';
+import { IConfigService } from './config/config.service.interface';
 
 @injectable()
 export class App {
@@ -16,7 +17,8 @@ export class App {
 	constructor(
 		@inject(TYPES.ILogger) private logger: ILogger,
 		@inject(TYPES.IUserController) private usersController: UserController,
-		@inject(TYPES.IExceptionFilter) private exceptionFilter: ExceptionFilter,
+		@inject(TYPES.IExceptionFilter) private exceptionFilter: IExceptionFilter,
+		@inject(TYPES.IConfigService) private configService: IConfigService,
 	) {
 		this.app = express();
 		this.port = 8000;
@@ -38,6 +40,6 @@ export class App {
 		this.useRoutes();
 		this.useExceptionFilters();
 		this.server = this.app.listen(this.port);
-		this.logger.log(`Server started on port ${this.port}`);
+		this.logger.log(`[App] Server started on port ${this.port}`);
 	}
 }
