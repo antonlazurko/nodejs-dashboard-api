@@ -4,7 +4,7 @@
 
 ### Description
 
-#### This project is a RESTful API built with Node.js and Express.js for managing user data. It includes authentication and authorization features and provides access to user information.
+##### This project is a RESTful API built with Node.js and Express.js for managing user data. It includes authentication and authorization features and provides access to user information.
 
 ### Features
 * User authentication and authorization
@@ -36,8 +36,8 @@
 
 ### Endpoints
 * /users/info: Retrieve user information
-* /users/login: Login user with credentials **{ email, password}**
-* /users/register: Register user with credentials **{ name, email, password}**
+* /users/login: Login user with credentials *( email, password )*
+* /users/register: Register user with credentials *( name, email, password )*
 
 
 ### Development
