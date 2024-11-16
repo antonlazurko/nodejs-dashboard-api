@@ -44,5 +44,10 @@
 #### Recommended IDE
 ##### Visual Studio Code with TypeScript support
 
+#### Create DB and add migration
+`npm run generate`
+
+`npx prisma migrate dev`
+
 #### Run server in development mode
 `npm run dev`
