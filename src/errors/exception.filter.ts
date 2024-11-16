@@ -5,7 +5,7 @@ import 'reflect-metadata';
 import { IExceptionFilter } from './exception.filter.interface';
 import { HttpError } from './http-error.class';
 import { ILogger } from '../logger/logger.interface';
-import { TYPES } from '../types';
+import { TYPES } from '../types/types';
 
 @injectable()
 export class ExceptionFilter implements IExceptionFilter {

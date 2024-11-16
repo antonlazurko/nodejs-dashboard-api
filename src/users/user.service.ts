@@ -6,7 +6,7 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { User } from './user.entity';
 import { IUserService } from './interfaces/user.service.interface';
-import { TYPES } from '../types';
+import { TYPES } from '../types/types';
 import { IConfigService } from '../config/config.service.interface';
 import { IUsersRepository } from './interfaces/users.repository.interface';
 

@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify';
 
 import { IConfigService } from './config.service.interface';
 import { ILogger } from '../logger/logger.interface';
-import { TYPES } from '../types';
+import { TYPES } from '../types/types';
 
 @injectable()
 export class ConfigService implements IConfigService {

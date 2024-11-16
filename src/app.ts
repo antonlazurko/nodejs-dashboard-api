@@ -5,11 +5,12 @@ import { injectable, inject } from 'inversify';
 
 import { UserController } from './users/users.controller';
 import { ILogger } from './logger/logger.interface';
-import { TYPES } from './types';
+import { TYPES } from './types/types';
 import { IExceptionFilter } from './errors/exception.filter.interface';
 import { IConfigService } from './config/config.service.interface';
 import { PrismaService } from './database/prisma.service';
 import { IUsersRepository } from './users/interfaces/users.repository.interface';
+import { AuthMiddleware } from './common/middlewares/auth.middlewares';
 
 @injectable()
 export class App {
@@ -37,6 +38,8 @@ export class App {
 	}
 	useMiddleware(): void {
 		this.app.use(json());
+		const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'));
+		this.app.use(authMiddleware.execute.bind(authMiddleware));
 	}
 
 	public async init(): Promise<void> {

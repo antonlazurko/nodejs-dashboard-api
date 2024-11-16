@@ -6,12 +6,12 @@ import 'reflect-metadata';
 import { BaseController } from '../common/base.controller';
 import { HttpError } from '../errors/http-error.class';
 import { ILogger } from '../logger/logger.interface';
-import { TYPES } from '../types';
+import { TYPES } from '../types/types';
 import { IUserController } from './interfaces/user.controller.interface';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { IUserService } from './interfaces/user.service.interface';
-import { ValidateMiddleware } from '../common/validate.middleware';
+import { ValidateMiddleware } from '../common/middlewares/validate.middleware';
 import { IConfigService } from '../config/config.service.interface';
 
 @injectable()
@@ -34,6 +34,12 @@ export class UserController extends BaseController implements IUserController {
 				method: 'post',
 				func: this.register,
 				middlewares: [new ValidateMiddleware(UserRegisterDto)],
+			},
+			{
+				path: '/info',
+				method: 'get',
+				func: this.info,
+				middlewares: [],
 			},
 		]);
 	}
@@ -64,6 +70,10 @@ export class UserController extends BaseController implements IUserController {
 		}
 		this.loggerService.log(`[UserController] User ${result.name} was created.`);
 		this.ok(res, { name: result.name, id: result.id }, 201);
+	}
+
+	async info({ user }: Request, res: Response, next: NextFunction): Promise<void> {
+		this.ok(res, { email: user }, 200);
 	}
 
 	private signJWT(email: string, secret: string): Promise<string> {

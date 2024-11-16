@@ -3,7 +3,7 @@ import { inject } from 'inversify';
 
 import { IUsersRepository } from './interfaces/users.repository.interface';
 import { User } from './user.entity';
-import { TYPES } from '../types';
+import { TYPES } from '../types/types';
 import { PrismaService } from '../database/prisma.service';
 
 export class UsersRepository implements IUsersRepository {
