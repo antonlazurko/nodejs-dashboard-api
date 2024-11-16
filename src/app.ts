@@ -10,7 +10,7 @@ import { IExceptionFilter } from './errors/exception.filter.interface';
 import { IConfigService } from './config/config.service.interface';
 import { PrismaService } from './database/prisma.service';
 import { IUsersRepository } from './users/interfaces/users.repository.interface';
-import { AuthMiddleware } from './common/middlewares/auth.middlewares';
+import { AuthMiddleware } from './common/middlewares/auth.middleware';
 
 @injectable()
 export class App {

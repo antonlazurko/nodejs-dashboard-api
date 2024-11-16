@@ -13,6 +13,7 @@ import { UserRegisterDto } from './dto/user-register.dto';
 import { IUserService } from './interfaces/user.service.interface';
 import { ValidateMiddleware } from '../common/middlewares/validate.middleware';
 import { IConfigService } from '../config/config.service.interface';
+import { AuthGuardMiddleware } from '../common/middlewares/auth.guard.middleware';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
@@ -39,7 +40,7 @@ export class UserController extends BaseController implements IUserController {
 				path: '/info',
 				method: 'get',
 				func: this.info,
-				middlewares: [],
+				middlewares: [new AuthGuardMiddleware()],
 			},
 		]);
 	}
@@ -56,7 +57,7 @@ export class UserController extends BaseController implements IUserController {
 		}
 		const jwt = await this.signJWT(body.email, this.configService.get('SECRET'));
 
-		this.loggerService.log(`[UserController] User found with email: ${body.email}`);
+		this.loggerService.log(`[UserController login] User found with email: ${body.email}`);
 		this.ok(res, { jwt }, 200);
 	}
 	async register(
@@ -68,12 +69,19 @@ export class UserController extends BaseController implements IUserController {
 		if (!result) {
 			return next(new HttpError('User already exist', 422, 'register'));
 		}
-		this.loggerService.log(`[UserController] User ${result.name} was created.`);
+		this.loggerService.log(`[UserController register] User ${result.name} was created.`);
 		this.ok(res, { name: result.name, id: result.id }, 201);
 	}
 
 	async info({ user }: Request, res: Response, next: NextFunction): Promise<void> {
-		this.ok(res, { email: user }, 200);
+		const userInfo = await this.userService.getUserInfo(user);
+
+		if (!userInfo) {
+			return next(new HttpError('User not found', 404, 'info'));
+		}
+
+		this.loggerService.log(`[UserController info] User found with email: ${userInfo.email}`);
+		this.ok(res, { email: userInfo?.email, name: userInfo?.name, id: userInfo?.id }, 200);
 	}
 
 	private signJWT(email: string, secret: string): Promise<string> {
