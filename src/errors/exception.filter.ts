@@ -1,6 +1,6 @@
+import 'reflect-metadata';
 import { Request, Response, NextFunction } from 'express';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
 
 import { IExceptionFilter } from './exception.filter.interface';
 import { HttpError } from './http-error.class';

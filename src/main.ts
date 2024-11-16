@@ -1,5 +1,5 @@
-import { Container, ContainerModule, interfaces } from 'inversify';
 import 'reflect-metadata';
+import { Container, ContainerModule, interfaces } from 'inversify';
 
 import { App } from './app';
 import { LoggerService } from './logger/logger.service';

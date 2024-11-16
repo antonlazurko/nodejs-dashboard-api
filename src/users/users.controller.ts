@@ -1,7 +1,7 @@
+import 'reflect-metadata';
 import { Request, Response, NextFunction } from 'express';
 import { inject, injectable } from 'inversify';
 import { sign } from 'jsonwebtoken';
-import 'reflect-metadata';
 
 import { BaseController } from '../common/base.controller';
 import { HttpError } from '../errors/http-error.class';

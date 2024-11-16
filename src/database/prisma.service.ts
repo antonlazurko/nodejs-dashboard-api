@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { PrismaClient } from '@prisma/client';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../types/types';

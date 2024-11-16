@@ -1,6 +1,6 @@
+import 'reflect-metadata';
 import { Logger, ISettingsParam, ILogObj } from 'tslog';
 import { injectable } from 'inversify';
-import 'reflect-metadata';
 
 import { ILogger } from './logger.interface';
 

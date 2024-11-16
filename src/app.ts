@@ -1,6 +1,6 @@
+import 'reflect-metadata';
 import express, { Express, json } from 'express';
 import { Server } from 'http';
-import 'reflect-metadata';
 import { injectable, inject } from 'inversify';
 
 import { UserController } from './users/users.controller';

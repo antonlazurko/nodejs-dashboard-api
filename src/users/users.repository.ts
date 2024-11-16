@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { UserModel } from '@prisma/client';
 import { inject } from 'inversify';
 

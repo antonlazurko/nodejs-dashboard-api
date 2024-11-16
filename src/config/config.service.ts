@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { config, DotenvConfigOutput, DotenvParseOutput } from 'dotenv';
 import { inject, injectable } from 'inversify';
 
