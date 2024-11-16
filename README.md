@@ -44,6 +44,14 @@
 #### Recommended IDE
 ##### Visual Studio Code with TypeScript support
 
+#### Add `.env` file to root directory and add necessary values
+
+```env
+SALT=10
+SECRET=MY_SECRET_KEY
+```
+
+
 #### Create DB and add migration
 `npm run generate`
 
