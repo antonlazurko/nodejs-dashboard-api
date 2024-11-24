@@ -2,8 +2,8 @@ import { compare, hash } from 'bcryptjs';
 
 export class Product {
 	constructor(
-		private readonly _description: string,
 		private readonly _name: string,
+		private readonly _description: string,
 		private readonly _brand: string,
 		private readonly _color: string,
 		private readonly _price: number,

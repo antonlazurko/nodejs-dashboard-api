@@ -8,6 +8,7 @@ import { IProductService } from './interfaces/product.service.interface';
 import { TYPES } from '../types/types';
 import { IConfigService } from '../config/config.service.interface';
 import { IProductRepository } from './interfaces/product.repository.interface';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @injectable()
 export class ProductService implements IProductService {
@@ -15,17 +16,29 @@ export class ProductService implements IProductService {
 		@inject(TYPES.IConfigService) private configService: IConfigService,
 		@inject(TYPES.IProductRepository) private productRepository: IProductRepository,
 	) {}
-	async createProduct(product: CreateProductDto): Promise<ProductModel | null> {
+	async createProduct({
+		name,
+		description,
+		brand,
+		color,
+		price,
+		size,
+		quantity,
+		isNewState,
+	}: CreateProductDto): Promise<ProductModel | null> {
 		const newProduct = new Product(
-			product.name,
-			product.description,
-			product.brand,
-			product.color,
-			product.price,
-			product.size,
-			product.quantity,
-			product.isNewState,
+			name,
+			description,
+			brand,
+			color,
+			price,
+			size,
+			quantity,
+			isNewState,
 		);
 		return this.productRepository.createProduct(newProduct);
+	}
+	async updateProduct(id: string, data: UpdateProductDto): Promise<ProductModel | null> {
+		return this.productRepository.updateProduct(id, data);
 	}
 }

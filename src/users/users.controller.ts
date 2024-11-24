@@ -23,26 +23,29 @@ export class UserController extends BaseController implements IUserController {
 		@inject(TYPES.IConfigService) private configService: IConfigService,
 	) {
 		super(loggerService);
-		this.bindRoutes([
-			{
-				path: '/login',
-				method: 'post',
-				func: this.login,
-				middlewares: [new ValidateMiddleware(UserLoginDto)],
-			},
-			{
-				path: '/register',
-				method: 'post',
-				func: this.register,
-				middlewares: [new ValidateMiddleware(UserRegisterDto)],
-			},
-			{
-				path: '/info',
-				method: 'get',
-				func: this.info,
-				middlewares: [new AuthGuardMiddleware()],
-			},
-		]);
+		this.bindRoutes(
+			[
+				{
+					path: '/login',
+					method: 'post',
+					func: this.login,
+					middlewares: [new ValidateMiddleware(UserLoginDto)],
+				},
+				{
+					path: '/register',
+					method: 'post',
+					func: this.register,
+					middlewares: [new ValidateMiddleware(UserRegisterDto)],
+				},
+				{
+					path: '/info',
+					method: 'get',
+					func: this.info,
+					middlewares: [new AuthGuardMiddleware()],
+				},
+			],
+			'/users',
+		);
 	}
 	async login(
 		{ body }: Request<object, object, UserLoginDto>,
@@ -67,7 +70,7 @@ export class UserController extends BaseController implements IUserController {
 	): Promise<void> {
 		const result = await this.userService.createUser(body);
 		if (!result) {
-			return next(new HttpError('User already exist', 422, 'register'));
+			return next(new HttpError('User already exist', 409, 'register'));
 		}
 		this.loggerService.log(`[UserController register] User ${result.name} was created.`);
 		this.ok(res, { name: result.name, id: result.id }, 201);
