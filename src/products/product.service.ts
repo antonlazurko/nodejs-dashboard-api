@@ -41,4 +41,17 @@ export class ProductService implements IProductService {
 	async updateProduct(id: string, data: UpdateProductDto): Promise<ProductModel | null> {
 		return this.productRepository.updateProduct(id, data);
 	}
+	async removeProduct(id: string): Promise<void> {
+		const existingProduct = await this.productRepository.getProductById(id);
+
+		if (!existingProduct) {
+			throw new Error('Product not found');
+		}
+
+		if (existingProduct.quantity > 1) {
+			await this.productRepository.updateProduct(id, { quantity: existingProduct.quantity - 1 });
+		} else {
+			await this.productRepository.removeProduct(id);
+		}
+	}
 }

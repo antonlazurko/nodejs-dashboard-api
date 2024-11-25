@@ -51,4 +51,12 @@ export class ProductRepository implements IProductRepository {
 			throw new HttpError('An unexpected error occurred.', 500, 'ProductRepository updateProduct');
 		}
 	}
+	async getProductById(id: string): Promise<ProductModel | null> {
+		return this.prismaService.client.productModel.findUnique({ where: { id } });
+	}
+	async removeProduct(id: string): Promise<void> {
+		await this.prismaService.client.productModel.delete({
+			where: { id },
+		});
+	}
 }

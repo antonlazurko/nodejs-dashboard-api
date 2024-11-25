@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { Request, Response, NextFunction } from 'express';
 import { inject, injectable } from 'inversify';
 import { isValidObjectId } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 import { BaseController } from '../common/base.controller';
 import { HttpError } from '../errors/http-error.class';
@@ -35,6 +36,11 @@ export class ProductController extends BaseController implements IProductControl
 					func: this.update,
 					middlewares: [new ValidateMiddleware(UpdateProductDto)],
 				},
+				{
+					path: '/:id',
+					method: 'delete',
+					func: this.remove,
+				},
 			],
 			'/products',
 		);
@@ -47,7 +53,7 @@ export class ProductController extends BaseController implements IProductControl
 		try {
 			const result = await this.productService.createProduct(body);
 			if (!result) {
-				return next(new HttpError('Product already exist', 409, 'register'));
+				return next(new HttpError('Product already exist', 409, 'ProductController create'));
 			}
 			this.loggerService.log(`[ProductController create] Product ${result.name} was created.`);
 			this.ok(res, { name: result.name, id: result.id }, 201);
@@ -88,13 +94,44 @@ export class ProductController extends BaseController implements IProductControl
 			const updatedProduct = await this.productService.updateProduct(id, data);
 
 			if (!updatedProduct) {
-				return next(new HttpError('Product not found', 404, 'update'));
+				return next(new HttpError('Product not found', 404, 'ProductController update'));
 			}
 
 			this.loggerService.log(
 				`[ProductController update] Product ${updatedProduct.name} was updated.`,
 			);
 			this.ok(res, updatedProduct, 200);
+		} catch (error) {
+			next(error);
+		}
+	}
+	async remove(req: Request, res: Response, next: NextFunction): Promise<void> {
+		const { id } = req.params;
+		if (!id) {
+			return next(
+				new HttpError(
+					'Product ID is required. Please provide an ID',
+					400,
+					'ProductController remove',
+				),
+			);
+		}
+		const trimmedId = id.trim();
+
+		if (!ObjectId.isValid(trimmedId)) {
+			return next(
+				new HttpError(
+					'Invalid Product ID. Please provide a valid ID',
+					400,
+					'ProductController remove',
+				),
+			);
+		}
+
+		try {
+			await this.productService.removeProduct(trimmedId);
+			this.loggerService.log(`[ProductController remove] Product ${trimmedId} was removed.`);
+			this.ok(res, {}, 204);
 		} catch (error) {
 			next(error);
 		}
