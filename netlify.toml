@@ -1,0 +1,8 @@
+[build]
+  functions = "netlify/functions"  # Папка с серверными функциями
+
+[[redirects]]
+  from = "/"          # Редирект с корня сайта
+  to = "/.netlify/functions/main"  # Путь до вашей функции
+  status = 200        # Статус ответа 200
+  force = true        # Перенаправление без проверки других правил
