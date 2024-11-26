@@ -49,6 +49,8 @@ describe('User Service', () => {
 				email: user.email,
 				password: user.password,
 				id: '1',
+				createdAt: new Date(),
+				updatedAt: new Date(),
 			}),
 		);
 		createdUser = await usersService.createUser(user);

@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import express, { Express, json } from 'express';
 import { Server } from 'http';
 import { injectable, inject } from 'inversify';
+import cors from 'cors';
 
 import { UserController } from './users/users.controller';
 import { ILogger } from './logger/logger.interface';
@@ -43,6 +44,8 @@ export class App {
 	}
 	useMiddleware(): void {
 		this.app.use(json());
+		this.app.use(cors());
+
 		const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'));
 		this.app.use(authMiddleware.execute.bind(authMiddleware));
 	}
@@ -52,6 +55,9 @@ export class App {
 		this.useRoutes();
 		this.useExceptionFilters();
 		await this.prismaService.connect();
+		this.logger.log(this.configService.get('SECRET'));
+		this.logger.log(this.configService.get('DATABASE_URL'));
+		this.logger.log(process.env);
 		this.server = this.app.listen(this.port);
 		this.logger.log(`[App] Server started on port ${this.port}`);
 	}

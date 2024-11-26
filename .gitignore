@@ -6,3 +6,4 @@
 /prisma/dev.db-journal
 /coverage
 /tests/coverage
+.vercel

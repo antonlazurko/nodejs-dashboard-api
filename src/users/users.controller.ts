@@ -43,6 +43,11 @@ export class UserController extends BaseController implements IUserController {
 					func: this.info,
 					middlewares: [new AuthGuardMiddleware()],
 				},
+				{
+					path: '/',
+					method: 'get',
+					func: this.response,
+				},
 			],
 			'/users',
 		);
@@ -101,5 +106,12 @@ export class UserController extends BaseController implements IUserController {
 				},
 			);
 		});
+	}
+	async response(req: Request, res: Response, next: NextFunction): Promise<void> {
+		this.loggerService.log(this.configService.get('SECRET'));
+		this.loggerService.log(this.configService.get('DATABASE_URL'));
+		const test = await this.userService.getUserInfo('test2@mail.com');
+		this.loggerService.log(`[UserController response] Test`);
+		this.ok(res, { message: 'Test from response', test }, 200);
 	}
 }
