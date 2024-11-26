@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import { config, DotenvConfigOutput, DotenvParseOutput } from 'dotenv';
 import { inject, injectable } from 'inversify';
 
 import { IConfigService } from './config.service.interface';
@@ -8,17 +7,25 @@ import { TYPES } from '../types/types';
 
 @injectable()
 export class ConfigService implements IConfigService {
-	private config: DotenvParseOutput;
+	private config: { [key: string]: string | undefined };
+
 	constructor(@inject(TYPES.ILogger) private logger: ILogger) {
-		const result: DotenvConfigOutput = config();
-		if (result.error) {
-			this.logger.error('[ConfigService] Failed to read the file .env or it is missing.');
+		this.config = process.env;
+		if (!this.config || Object.keys(this.config).length === 0) {
+			this.logger.error('[ConfigService] No environment variables found.');
 		} else {
-			this.logger.log('[ConfigService] .env configuration loaded');
-			this.config = result.parsed as DotenvParseOutput;
+			this.logger.log('[ConfigService] Environment variables loaded');
 		}
 	}
+
 	get(key: string): string {
-		return this.config[key] as string;
+		const value = this.config[key];
+		if (!value) {
+			this.logger.error(
+				`[ConfigService] Key "${key}" is not defined in the environment variables.`,
+			);
+			throw new Error(`Key "${key}" is not defined.`);
+		}
+		return value;
 	}
 }
