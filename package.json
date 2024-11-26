@@ -2,7 +2,7 @@
   "name": "nodejs-dashboard-api",
   "version": "1.0.0",
   "description": "Api for course project",
-  "main": "index.js",
+  "main": "dist/src/main.js",
   "type": "commonjs",
   "scripts": {
     "start": "node ./dist/main.js",
