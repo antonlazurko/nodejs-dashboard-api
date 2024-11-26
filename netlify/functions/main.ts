@@ -13,6 +13,10 @@ import { TYPES } from '../../src/types/types';
 import { IUserService } from '../../src/users/interfaces/user.service.interface';
 import { UserService } from '../../src/users/user.service';
 import { PrismaService } from '../../src/database/prisma.service';
+import { IConfigService } from '../../src/config/config.service.interface';
+import { ConfigService } from '../../src/config/config.service';
+import { IUsersRepository } from '../../src/users/interfaces/users.repository.interface';
+import { UsersRepository } from '../../src/users/users.repository';
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope();
@@ -20,6 +24,8 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<IExceptionFilter>(TYPES.IExceptionFilter).to(ExceptionFilter);
 	bind<IUserService>(TYPES.IUserService).to(UserService);
 	bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
+	bind<IConfigService>(TYPES.IConfigService).to(ConfigService).inSingletonScope();
+	bind<IUsersRepository>(TYPES.IUsersRepository).to(UsersRepository).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });
 
