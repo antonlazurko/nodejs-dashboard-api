@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, { Express, json } from 'express';
+import express, { Express, json, Request, Response, NextFunction } from 'express';
 import { Server } from 'http';
 import { injectable, inject } from 'inversify';
 
@@ -31,6 +31,9 @@ export class App {
 
 	useRoutes(): void {
 		this.app.use('/users', this.usersController.router);
+		this.app.get('/', (req: Request, res: Response, next: NextFunction) => {
+			res.json({ message: 'Hello from your app!' });
+		});
 	}
 
 	useExceptionFilters(): void {
