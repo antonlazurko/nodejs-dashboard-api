@@ -48,11 +48,11 @@ describe('User Service', () => {
 				name: user.name,
 				email: user.email,
 				password: user.password,
-				id: 1,
+				id: '1',
 			}),
 		);
 		createdUser = await usersService.createUser(user);
-		expect(createdUser?.id).toEqual(1);
+		expect(createdUser?.id).toEqual('1');
 		expect(createdUser?.password).not.toEqual(user.password);
 	});
 

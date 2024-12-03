@@ -28,9 +28,10 @@ export class BaseController {
 		return this.send<T>(response, code, message);
 	}
 
-	protected bindRoutes(routes: IControllerRoute[]): void {
+	protected bindRoutes(routes: IControllerRoute[], basePath: string = ''): void {
 		for (const route of routes) {
-			this.logger.log(`[${route.method}] ${route.path}`);
+			const fullPath = `${basePath}${route.path}`;
+			this.logger.log(`[${route.method}] ${fullPath}`);
 			const middlewares = route.middlewares?.map((m) => m.execute.bind(m));
 			const handler = route.func.bind(this);
 			const pipeline = middlewares ? [...middlewares, handler] : handler;

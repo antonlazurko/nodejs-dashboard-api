@@ -11,6 +11,8 @@ import { IConfigService } from './config/config.service.interface';
 import { PrismaService } from './database/prisma.service';
 import { IUsersRepository } from './users/interfaces/users.repository.interface';
 import { AuthMiddleware } from './common/middlewares/auth.middleware';
+import { ProductController } from './products/product.controller';
+import { IProductRepository } from './products/interfaces/product.repository.interface';
 
 @injectable()
 export class App {
@@ -20,10 +22,12 @@ export class App {
 	constructor(
 		@inject(TYPES.ILogger) private logger: ILogger,
 		@inject(TYPES.IUserController) private usersController: UserController,
+		@inject(TYPES.IProductController) private productController: ProductController,
 		@inject(TYPES.IExceptionFilter) private exceptionFilter: IExceptionFilter,
 		@inject(TYPES.IConfigService) private configService: IConfigService,
 		@inject(TYPES.PrismaService) private prismaService: PrismaService,
 		@inject(TYPES.IUsersRepository) private usersRepository: IUsersRepository,
+		@inject(TYPES.IProductRepository) private productRepository: IProductRepository,
 	) {
 		this.app = express();
 		this.port = 8000;
@@ -31,6 +35,7 @@ export class App {
 
 	useRoutes(): void {
 		this.app.use('/users', this.usersController.router);
+		this.app.use('/products', this.productController.router);
 	}
 
 	useExceptionFilters(): void {
