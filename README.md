@@ -4,11 +4,12 @@
 
 ### Description
 
-##### This project is a RESTful API built with Node.js and Express.js for managing user data. It includes authentication and authorization features and provides access to user information.
+##### This project is a RESTful API built with Node.js and Express.js for managing user data and working with products. It includes authentication and authorization features and provides access to user information. Implemented adding, updating and deleting product features
 
 ### Features
 * User authentication and authorization
 * Retrieve user information
+* Product CRUD logic
 
 ### Technologies
 * Node.js
