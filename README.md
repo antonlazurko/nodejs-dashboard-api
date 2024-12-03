@@ -4,7 +4,7 @@
 
 ### Description
 
-##### This project is a RESTful API built with Node.js and Express.js for managing user data and working with products. It includes authentication and authorization features and provides access to user information. Implemented adding, updating and deleting product features
+##### This project is a RESTful API built with Node.js and Express.js for managing user data and working with products. It includes authentication and authorization features and provides access to user information. Implemented adding, updating, and deleting product features
 
 ### Features
 * User authentication and authorization
@@ -52,13 +52,13 @@
 #### Recommended IDE
 ##### Visual Studio Code with TypeScript support
 
-#### Add `.env` file to root directory and add necessary values
+#### Add the `.env` file to the root directory and add the necessary values
 
 ```env
 SALT=10
 SECRET=MY_SECRET_KEY
+DATABASE_URL="mongodb+srv://<username>:<password>@cluster.mongodb.net/<database-name>"
 ```
-
 
 #### Create DB and add migration
 `npm run generate`
