@@ -1,6 +1,6 @@
-# NodeJS Dashboard API
+# NodeJS e-shop API
 
-## API for NodeJS Dashboard Project
+## API for NodeJS e-shop Project
 
 ### Description
 
@@ -15,6 +15,8 @@
 * Express.js
 * TypeScript
 * Prisma
+* MongoDB
+* Mongoose
 * JSON Web Tokens (JWT)
 
 ### Installation
@@ -27,17 +29,22 @@
 `npm install`
 
 
+#### Generate prisma
+`npm run generate`
+
 #### Build app
 `npm run build`
-
 
 #### Start the server
 `npm start`
 
 ### Endpoints
-* /users/info: Retrieve user information
-* /users/login: Login user with credentials *( email, password )*
-* /users/register: Register user with credentials *( name, email, password )*
+* [get] /users/info: Retrieve user information
+* [post] /users/login: Login user with credentials *( email, password )*
+* [post] /users/register: Register user with credentials *( name, email, password )*
+* [post] /products/ Add new product
+* [patch] /products/:id Update existed product
+* [delete] /products/:id Delete existed product
 
 
 ### Development
